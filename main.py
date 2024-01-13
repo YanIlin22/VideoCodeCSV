@@ -2,17 +2,21 @@ import csv
 import sys
 
 import clipboard
-import pyperclip
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QFileDialog
+from MainWindow import Ui_MainWindow
 
 
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('MainWindow.ui', self)
-        self.pushButton.clicked.connect(self.openBtnClick)
+
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        # uic.loadUi('MainWindow.ui', self)
+        self.ui.pushButton.clicked.connect(self.openBtnClick)
 
     def openBtnClick(self):
         fname = QFileDialog.getOpenFileName(self, 'Открыть файл', '', 'csv (*.csv)')[0]
@@ -36,8 +40,8 @@ class Window(QMainWindow):
             clipboard.copy(res[:-1])
 
 
-
-app = QApplication(sys.argv)
-ex = Window()
-ex.show()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Window()
+    ex.show()
+    sys.exit(app.exec_())
